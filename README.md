@@ -1,6 +1,6 @@
 # Enterprise AI Control Plane — Reference Architecture
 
-A reference architecture for the enterprise AI control plane.
+Reference architecture for governed enterprise AI orchestration across apps, agents, models, tools, telemetry, and revenue workloads.
 
 ## Purpose
 
