@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary metadata -->
+  <title>Enterprise AI Control Plane — Reference Architecture | Gary Rikard, MBA</title>
+  <meta name="title" content="Enterprise AI Control Plane — Reference Architecture | Gary Rikard, MBA">
+  <meta name="description" content="A reference architecture for the enterprise AI control plane: governed orchestration across application platforms, agent runtimes, MCP/A2A connectivity, identity, policy, observability, and revenue intelligence workloads.">
+  <meta name="author" content="Gary Rikard">
+  <meta name="creator" content="Gary Rikard">
+  <meta name="publisher" content="Gary Rikard">
+  <meta name="keywords" content="Enterprise AI Control Plane, agentic AI, AI governance, MCP, A2A, AI observability, revenue intelligence, workflow economics, Salesforce, SAP, Oracle, Microsoft, CPQ, CLM, ERP">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="en">
+  <meta name="theme-color" content="#111827">
+  <link rel="canonical" href="https://grikard.github.io/enterprise-ai-control-plane/">
+
+  <!-- Open Graph / LinkedIn / Substack link previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://grikard.github.io/enterprise-ai-control-plane/">
+  <meta property="og:title" content="Enterprise AI Control Plane — Reference Architecture | Gary Rikard">
+  <meta property="og:description" content="Reference architecture for governed enterprise AI orchestration across apps, agents, tools, models, telemetry, and revenue workloads.">
+  <meta property="og:site_name" content="Gary Rikard">
+  <meta property="og:locale" content="en_US">
+
+  <!-- X / Twitter preview metadata -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Enterprise AI Control Plane — Reference Architecture | Gary Rikard">
+  <meta name="twitter:description" content="Reference architecture for governed enterprise AI orchestration across apps, agents, tools, models, telemetry, and revenue workloads.">
+
+  <!-- Search-engine structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Enterprise AI Control Plane — Reference Architecture",
+    "headline": "Enterprise AI Control Plane — Reference Architecture",
+    "description": "A reference architecture for the enterprise AI control plane: governed orchestration across application platforms, agent runtimes, MCP/A2A connectivity, identity, policy, observability, and revenue intelligence workloads.",
+    "author": {
+      "@type": "Person",
+      "name": "Gary Rikard",
+      "sameAs": "https://www.linkedin.com/in/garyrikard"
+    },
+    "creator": {
+      "@type": "Person",
+      "name": "Gary Rikard",
+      "sameAs": "https://www.linkedin.com/in/garyrikard"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Gary Rikard",
+      "sameAs": "https://www.linkedin.com/in/garyrikard"
+    },
+    "url": "https://grikard.github.io/enterprise-ai-control-plane/",
+    "inLanguage": "en",
+    "datePublished": "2026-05-06",
+    "dateModified": "2026-05-06",
+    "keywords": [
+      "Enterprise AI Control Plane",
+      "Agentic AI",
+      "MCP",
+      "A2A",
+      "AI Governance",
+      "AI Observability",
+      "Revenue Intelligence",
+      "Workflow Economics"
+    ]
+  }
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #f4f2ed;
+      color: #111827;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+    main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .frame {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    }
+    .svg-wrap {
+      width: 100%;
+      overflow-x: auto;
+      background: #f4f2ed;
+    }
+    .svg-wrap svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      min-width: 980px;
+    }
+    footer {
+      padding: 14px 22px;
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      font-size: 12px;
+      color: #6b7280;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    footer strong {
+      color: #111827;
+      font-weight: 600;
+    }
+    footer a {
+      color: #374151;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="frame">
+      <div class="svg-wrap">
+<svg viewBox="0 0 1600 1200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ra-title ra-desc" font-family="'Charter', 'Iowan Old Style', 'Georgia', serif">
+  <title id="ra-title">Enterprise AI Control Plane — Reference Architecture</title>
+  <desc id="ra-desc">A layered reference architecture showing the enterprise AI control plane as a distinct platform category sitting between the application platforms above (Salesforce, SAP, Oracle, Microsoft) and the agent runtime layer below. Nine functional primitives are organized into three groups — Execution (Runtime, Memory, Durable Workflow), Connectivity (Gateway via MCP, Inter-Agent via A2A, Model Routing), and Governance (Identity, Policy, Observability and Evals). A revenue intelligence workload column on the right shows how CPQ, CLM, billing, and analytics snap into the control plane through MCP servers.</desc>
+
+  <!-- Definitions -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fafaf6"/>
+      <stop offset="100%" stop-color="#f1ede2"/>
+    </linearGradient>
+    <linearGradient id="cpGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e3a5f" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#1e3a5f" stop-opacity="0.10"/>
+    </linearGradient>
+    <linearGradient id="goldAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c9a857"/>
+      <stop offset="100%" stop-color="#a8852c"/>
+    </linearGradient>
+    <pattern id="bpDots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.6" fill="#1e3a5f" opacity="0.10"/>
+    </pattern>
+    <filter id="primShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dy="2"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.18"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="1200" fill="url(#bgGradient)"/>
+  <rect width="1600" height="1200" fill="url(#bpDots)"/>
+
+  <!-- ========== HEADER ========== -->
+  <text x="80" y="70" font-size="14" letter-spacing="3" fill="#a8852c" font-weight="600">REFERENCE ARCHITECTURE</text>
+  <text x="80" y="115" font-size="44" font-weight="700" fill="#1e3a5f">The Enterprise AI Control Plane</text>
+  <text x="80" y="148" font-size="18" font-style="italic" fill="#5a6975">A governed execution layer for revenue intelligence at scale — Workflow Economics series</text>
+  
+  <!-- Decorative gold accent under title -->
+  <line x1="80" y1="165" x2="200" y2="165" stroke="url(#goldAccent)" stroke-width="3"/>
+<!-- ========== USER LAYER (top) ========== -->
+  <g transform="translate(80, 200)">
+    <text x="0" y="0" font-size="11" letter-spacing="2.5" fill="#5a6975" font-weight="600">USER &amp; CHANNEL LAYER</text>
+    <rect x="0" y="15" width="1440" height="70" fill="#fff" stroke="#d4d0c2" stroke-width="1" rx="3"/>
+    
+    <g font-size="14" fill="#1e3a5f" font-weight="500">
+      <text x="40" y="55" >Slack / Teams</text>
+      <text x="200" y="55">Email</text>
+      <text x="320" y="55">Web / Mobile</text>
+      <text x="490" y="55">Voice</text>
+      <text x="600" y="55">Partner Portal</text>
+      <text x="780" y="55">Customer Self-Serve</text>
+      <text x="990" y="55">CLI / IDE</text>
+      <text x="1130" y="55">Embedded UX</text>
+      <text x="1290" y="55">Headless API</text>
+    </g>
+  </g>
+
+  <!-- Down arrow connector -->
+  <g transform="translate(800, 295)" stroke="#1e3a5f" stroke-width="1.5" fill="none">
+    <line x1="0" y1="0" x2="0" y2="20"/>
+    <polyline points="-6,14 0,22 6,14"/>
+  </g>
+
+  <!-- ========== APPLICATION PLATFORM LAYER ========== -->
+  <g transform="translate(80, 325)">
+    <text x="0" y="0" font-size="11" letter-spacing="2.5" fill="#5a6975" font-weight="600">ENTERPRISE ENTERPRISE APPLICATION PLATFORMS</text>
+    
+    <g>
+      <rect x="0" y="15" width="280" height="80" fill="#fff" stroke="#1e3a5f" stroke-width="1.2" rx="3"/>
+      <text x="20" y="42" font-size="15" font-weight="700" fill="#1e3a5f">Salesforce</text>
+      <text x="20" y="62" font-size="11" fill="#5a6975">Agentforce 360 · RCA · Data Cloud</text>
+      <text x="20" y="78" font-size="11" fill="#5a6975">Tableau · MuleSoft</text>
+    </g>
+    
+    <g>
+      <rect x="295" y="15" width="280" height="80" fill="#fff" stroke="#1e3a5f" stroke-width="1.2" rx="3"/>
+      <text x="315" y="42" font-size="15" font-weight="700" fill="#1e3a5f">SAP</text>
+      <text x="315" y="62" font-size="11" fill="#5a6975">Joule · S/4HANA · AVC · SAP CPQ</text>
+      <text x="315" y="78" font-size="11" fill="#5a6975">SAC · BTP</text>
+    </g>
+    
+    <g>
+      <rect x="590" y="15" width="280" height="80" fill="#fff" stroke="#1e3a5f" stroke-width="1.2" rx="3"/>
+      <text x="610" y="42" font-size="15" font-weight="700" fill="#1e3a5f">Microsoft</text>
+      <text x="610" y="62" font-size="11" fill="#5a6975">Copilot · Foundry · Dynamics 365</text>
+      <text x="610" y="78" font-size="11" fill="#5a6975">Fabric · Power Platform</text>
+    </g>
+    
+    <g>
+      <rect x="885" y="15" width="280" height="80" fill="#fff" stroke="#1e3a5f" stroke-width="1.2" rx="3"/>
+      <text x="905" y="42" font-size="15" font-weight="700" fill="#1e3a5f">Oracle</text>
+      <text x="905" y="62" font-size="11" fill="#5a6975">AI Agent Studio · Fusion · CPQ</text>
+      <text x="905" y="78" font-size="11" fill="#5a6975">Subscription Mgmt · Analytics</text>
+    </g>
+    
+    <g>
+      <rect x="1180" y="15" width="125" height="80" fill="#fff" stroke="#5a6975" stroke-width="1" stroke-dasharray="3 3" rx="3"/>
+      <text x="1192" y="38" font-size="11" font-weight="700" fill="#5a6975">Quote-to-Cash</text>
+      <text x="1192" y="52" font-size="9" fill="#5a6975">independents</text>
+      <text x="1192" y="70" font-size="10" fill="#5a6975">Conga · Icertis</text>
+      <text x="1192" y="84" font-size="10" fill="#5a6975">Zuora · DocuSign</text>
+    </g>
+    
+    <g>
+      <rect x="1315" y="15" width="125" height="80" fill="#fff" stroke="#5a6975" stroke-width="1" stroke-dasharray="3 3" rx="3"/>
+      <text x="1327" y="38" font-size="11" font-weight="700" fill="#5a6975">Revenue Intel</text>
+      <text x="1327" y="52" font-size="9" fill="#5a6975">independents</text>
+      <text x="1327" y="70" font-size="10" fill="#5a6975">Gong · Clari</text>
+      <text x="1327" y="84" font-size="10" fill="#5a6975">Salesloft · BoostUp</text>
+    </g>
+  </g>
+
+  <!-- Down arrow connector -->
+  <g transform="translate(800, 445)" stroke="#1e3a5f" stroke-width="1.5" fill="none">
+    <line x1="0" y1="0" x2="0" y2="22"/>
+    <polyline points="-6,16 0,24 6,16"/>
+  </g>
+  <text x="816" y="465" font-size="11" fill="#5a6975" font-style="italic">MCP · A2A · REST / Events · Headless APIs</text>
+
+  <!-- ========== AI CONTROL PLANE (the centerpiece) ========== -->
+  <g transform="translate(80, 490)">
+    <!-- Container -->
+    <rect x="0" y="0" width="1440" height="380" fill="url(#cpGradient)" stroke="#1e3a5f" stroke-width="2" rx="4"/>
+    
+    <!-- Label tab -->
+    <rect x="0" y="-22" width="280" height="22" fill="#1e3a5f"/>
+    <text x="14" y="-7" font-size="11" letter-spacing="2.5" fill="#c9a857" font-weight="700">AI CONTROL PLANE</text>
+    
+    <!-- McKinsey citation -->
+    <text x="295" y="-7" font-size="10" fill="#5a6975" font-style="italic">governed orchestration layer across apps, agents, models, tools, and telemetry</text>
+    
+    <!-- Three group headers -->
+    <text x="40" y="40" font-size="12" letter-spacing="2.5" fill="#a8852c" font-weight="700">EXECUTION</text>
+    <text x="540" y="40" font-size="12" letter-spacing="2.5" fill="#a8852c" font-weight="700">CONNECTIVITY</text>
+    <text x="1040" y="40" font-size="12" letter-spacing="2.5" fill="#a8852c" font-weight="700">GOVERNANCE</text>
+
+    <!-- Group separator lines -->
+    <line x1="500" y1="55" x2="500" y2="350" stroke="#d4d0c2" stroke-width="1"/>
+    <line x1="1000" y1="55" x2="1000" y2="350" stroke="#d4d0c2" stroke-width="1"/>
+
+    <!-- ===== EXECUTION GROUP ===== -->
+    <!-- Runtime -->
+    <g transform="translate(40, 70)" filter="url(#primShadow)">
+      <rect width="200" height="78" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <circle cx="20" cy="22" r="4" fill="#c9a857"/>
+      <text x="34" y="26" font-size="14" font-weight="700" fill="#1e3a5f">Runtime</text>
+      <text x="14" y="48" font-size="10.5" fill="#5a6975">Session isolation, durable</text>
+      <text x="14" y="62" font-size="10.5" fill="#5a6975">execution, I/O wait billing</text>
+      <text x="14" y="74" font-size="9" fill="#a8852c" font-style="italic">AgentCore · Foundry · Engine</text>
+    </g>
+    
+    <!-- Memory -->
+    <g transform="translate(260, 70)" filter="url(#primShadow)">
+      <rect width="200" height="78" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <circle cx="20" cy="22" r="4" fill="#c9a857"/>
+      <text x="34" y="26" font-size="14" font-weight="700" fill="#1e3a5f">Memory</text>
+      <text x="14" y="48" font-size="10.5" fill="#5a6975">Short / medium / long-term,</text>
+      <text x="14" y="62" font-size="10.5" fill="#5a6975">vector + graph + relational</text>
+      <text x="14" y="74" font-size="9" fill="#a8852c" font-style="italic">Mem0 · Zep · AgentCore Memory</text>
+    </g>
+
+    <!-- Durable Workflow -->
+    <g transform="translate(150, 175)" filter="url(#primShadow)">
+      <rect width="200" height="78" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <circle cx="20" cy="22" r="4" fill="#c9a857"/>
+      <text x="34" y="26" font-size="14" font-weight="700" fill="#1e3a5f">Durable Workflow</text>
+      <text x="14" y="48" font-size="10.5" fill="#5a6975">Long-running state machines,</text>
+      <text x="14" y="62" font-size="10.5" fill="#5a6975">human-in-loop, replay</text>
+      <text x="14" y="74" font-size="9" fill="#a8852c" font-style="italic">Temporal · Inngest · Step Fns</text>
+    </g>
+
+    <!-- ===== CONNECTIVITY GROUP ===== -->
+    <!-- Gateway -->
+    <g transform="translate(540, 70)" filter="url(#primShadow)">
+      <rect width="200" height="78" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <circle cx="20" cy="22" r="4" fill="#c9a857"/>
+      <text x="34" y="26" font-size="14" font-weight="700" fill="#1e3a5f">Gateway (MCP)</text>
+      <text x="14" y="48" font-size="10.5" fill="#5a6975">Tool discovery, schema validation,</text>
+      <text x="14" y="62" font-size="10.5" fill="#5a6975">credential translation</text>
+      <text x="14" y="74" font-size="9" fill="#a8852c" font-style="italic">AgentCore Gateway · Apigee</text>
+    </g>
+
+    <!-- Inter-Agent -->
+    <g transform="translate(760, 70)" filter="url(#primShadow)">
+      <rect width="200" height="78" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <circle cx="20" cy="22" r="4" fill="#c9a857"/>
+      <text x="34" y="26" font-size="14" font-weight="700" fill="#1e3a5f">Inter-Agent (A2A)</text>
+      <text x="14" y="48" font-size="10.5" fill="#5a6975">Cross-platform agent handoffs,</text>
+      <text x="14" y="62" font-size="10.5" fill="#5a6975">signed agent cards, task lifecycle</text>
+      <text x="14" y="74" font-size="9" fill="#a8852c" font-style="italic">Linux Foundation A2A v1.2</text>
+    </g>
+
+    <!-- Model Routing -->
+    <g transform="translate(650, 175)" filter="url(#primShadow)">
+      <rect width="200" height="78" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <circle cx="20" cy="22" r="4" fill="#c9a857"/>
+      <text x="34" y="26" font-size="14" font-weight="700" fill="#1e3a5f">Model Routing</text>
+      <text x="14" y="48" font-size="10.5" fill="#5a6975">Tiered routing, prompt caching,</text>
+      <text x="14" y="62" font-size="10.5" fill="#5a6975">multi-model orchestration</text>
+      <text x="14" y="74" font-size="9" fill="#a8852c" font-style="italic">Portkey · LiteLLM · Bedrock</text>
+    </g>
+
+    <!-- ===== GOVERNANCE GROUP ===== -->
+    <!-- Identity -->
+    <g transform="translate(1040, 70)" filter="url(#primShadow)">
+      <rect width="190" height="78" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <circle cx="20" cy="22" r="4" fill="#c9a857"/>
+      <text x="34" y="26" font-size="14" font-weight="700" fill="#1e3a5f">Identity</text>
+      <text x="14" y="48" font-size="10.5" fill="#5a6975">OAuth 2.1, RFC 8693 token</text>
+      <text x="14" y="62" font-size="10.5" fill="#5a6975">exchange, agent identity, mTLS</text>
+      <text x="14" y="74" font-size="9" fill="#a8852c" font-style="italic">Entra Agent ID · Okta · SPIFFE</text>
+    </g>
+
+    <!-- Policy -->
+    <g transform="translate(1245, 70)" filter="url(#primShadow)">
+      <rect width="190" height="78" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <circle cx="20" cy="22" r="4" fill="#c9a857"/>
+      <text x="34" y="26" font-size="14" font-weight="700" fill="#1e3a5f">Policy</text>
+      <text x="14" y="48" font-size="10.5" fill="#5a6975">Pre-call authz, content filters,</text>
+      <text x="14" y="62" font-size="10.5" fill="#5a6975">PII redaction, jailbreak defense</text>
+      <text x="14" y="74" font-size="9" fill="#a8852c" font-style="italic">Purview · Lakera · Model Armor</text>
+    </g>
+
+    <!-- Observability + Evals -->
+    <g transform="translate(1140, 175)" filter="url(#primShadow)">
+      <rect width="200" height="78" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <circle cx="20" cy="22" r="4" fill="#c9a857"/>
+      <text x="34" y="26" font-size="14" font-weight="700" fill="#1e3a5f">Observability + Evals</text>
+      <text x="14" y="48" font-size="10.5" fill="#5a6975">OTel GenAI traces, drift detect,</text>
+      <text x="14" y="62" font-size="10.5" fill="#5a6975">continuous quality eval</text>
+      <text x="14" y="74" font-size="9" fill="#a8852c" font-style="italic">Langfuse · Arize · Datadog LLM</text>
+    </g>
+
+    <!-- Bottom row: protocol layer -->
+    <g transform="translate(40, 285)">
+      <text x="0" y="0" font-size="10" letter-spacing="2" fill="#5a6975" font-weight="700">PROTOCOL &amp; STANDARDS LAYER</text>
+      <rect x="0" y="12" width="1360" height="60" fill="#fff" stroke="#d4d0c2" stroke-width="1" rx="3"/>
+      <g font-size="12" fill="#1e3a5f">
+        <text x="20" y="36" font-weight="700">MCP</text>
+        <text x="20" y="54" font-size="10" fill="#5a6975">Anthropic, 2024</text>
+        
+        <text x="180" y="36" font-weight="700">A2A v1.2</text>
+        <text x="180" y="54" font-size="10" fill="#5a6975">Linux Foundation / A2A Project</text>
+        
+        <text x="360" y="36" font-weight="700">OpenTelemetry GenAI</text>
+        <text x="360" y="54" font-size="10" fill="#5a6975">Semantic conventions</text>
+        
+        <text x="580" y="36" font-weight="700">OAuth 2.x / RFC 8693</text>
+        <text x="580" y="54" font-size="10" fill="#5a6975">Token exchange, delegated access</text>
+        
+        <text x="850" y="36" font-weight="700">SPIFFE / SPIRE</text>
+        <text x="850" y="54" font-size="10" fill="#5a6975">Workload identity</text>
+        
+        <text x="1050" y="36" font-weight="700">CloudEvents</text>
+        <text x="1050" y="54" font-size="10" fill="#5a6975">Async event semantics</text>
+        
+        <text x="1210" y="36" font-weight="700">JSON-RPC 2.0</text>
+        <text x="1210" y="54" font-size="10" fill="#5a6975">RPC fabric</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Down arrow connector -->
+  <g transform="translate(800, 905)" stroke="#1e3a5f" stroke-width="1.5" fill="none">
+    <line x1="0" y1="0" x2="0" y2="22"/>
+    <polyline points="-6,16 0,24 6,16"/>
+  </g>
+  <text x="816" y="925" font-size="11" fill="#5a6975" font-style="italic">MCP server per system</text>
+
+  <!-- ========== REVENUE INTELLIGENCE WORKLOADS (the bottom layer) ========== -->
+  <g transform="translate(80, 950)">
+    <text x="0" y="0" font-size="11" letter-spacing="2.5" fill="#5a6975" font-weight="600">REVENUE INTELLIGENCE WORKLOADS  <tspan fill="#a8852c" font-style="italic">— CPQ is one workload, not the integration story</tspan></text>
+    
+    <!-- CPQ engines -->
+    <g transform="translate(0, 15)">
+      <rect width="320" height="100" fill="#fff" stroke="#a8852c" stroke-width="1.5" rx="3"/>
+      <text x="14" y="22" font-size="10" letter-spacing="2" fill="#a8852c" font-weight="700">CONFIGURE · PRICE · QUOTE</text>
+      <text x="14" y="44" font-size="13" font-weight="600" fill="#1e3a5f">Constraint solvers</text>
+      <text x="14" y="60" font-size="11" fill="#5a6975">SAP AVC (since 2018) · Salesforce RCA / CML</text>
+      <text x="14" y="80" font-size="13" font-weight="600" fill="#5a6975">Procedural rules engines</text>
+      <text x="14" y="94" font-size="11" fill="#5a6975">Oracle CPQ · Conga · CPQ Classic →</text>
+    </g>
+
+    <!-- CLM -->
+    <g transform="translate(335, 15)">
+      <rect width="200" height="100" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <text x="14" y="22" font-size="10" letter-spacing="2" fill="#5a6975" font-weight="700">CONTRACT LIFECYCLE</text>
+      <text x="14" y="48" font-size="13" font-weight="600" fill="#1e3a5f">CLM</text>
+      <text x="14" y="68" font-size="11" fill="#5a6975">Conga · Icertis · Ironclad</text>
+      <text x="14" y="86" font-size="11" fill="#5a6975">DocuSign CLM · Sirion</text>
+    </g>
+
+    <!-- Billing -->
+    <g transform="translate(550, 15)">
+      <rect width="200" height="100" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <text x="14" y="22" font-size="10" letter-spacing="2" fill="#5a6975" font-weight="700">BILLING &amp; REV REC</text>
+      <text x="14" y="48" font-size="13" font-weight="600" fill="#1e3a5f">Subscription / Usage</text>
+      <text x="14" y="68" font-size="11" fill="#5a6975">Zuora · Stripe Billing</text>
+      <text x="14" y="86" font-size="11" fill="#5a6975">SAP BRIM · NetSuite</text>
+    </g>
+
+    <!-- ERP / Manufacturing -->
+    <g transform="translate(765, 15)">
+      <rect width="200" height="100" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <text x="14" y="22" font-size="10" letter-spacing="2" fill="#5a6975" font-weight="700">ERP &amp; MANUFACTURING</text>
+      <text x="14" y="48" font-size="13" font-weight="600" fill="#1e3a5f">System of Record</text>
+      <text x="14" y="68" font-size="11" fill="#5a6975">SAP S/4HANA · Oracle Fusion</text>
+      <text x="14" y="86" font-size="11" fill="#5a6975">Microsoft Dynamics 365 F&amp;O</text>
+    </g>
+
+    <!-- Pipeline / Forecasting -->
+    <g transform="translate(980, 15)">
+      <rect width="200" height="100" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <text x="14" y="22" font-size="10" letter-spacing="2" fill="#5a6975" font-weight="700">PIPELINE &amp; FORECAST</text>
+      <text x="14" y="48" font-size="13" font-weight="600" fill="#1e3a5f">Revenue Intelligence</text>
+      <text x="14" y="68" font-size="11" fill="#5a6975">Clari · Gong · BoostUp</text>
+      <text x="14" y="86" font-size="11" fill="#5a6975">Outreach · Salesloft</text>
+    </g>
+
+    <!-- Analytics + Data -->
+    <g transform="translate(1195, 15)">
+      <rect width="245" height="100" fill="#fff" stroke="#1e3a5f" stroke-width="1" rx="3"/>
+      <text x="14" y="22" font-size="10" letter-spacing="2" fill="#5a6975" font-weight="700">DATA &amp; ANALYTICS</text>
+      <text x="14" y="48" font-size="13" font-weight="600" fill="#1e3a5f">Data Layer</text>
+      <text x="14" y="68" font-size="11" fill="#5a6975">Salesforce Data Cloud · SAP BTP</text>
+      <text x="14" y="86" font-size="11" fill="#5a6975">Snowflake · Databricks · Fabric</text>
+    </g>
+  </g>
+
+  <!-- ========== FOOTER LEGEND ========== -->
+  <g transform="translate(80, 1110)">
+    <line x1="0" y1="0" x2="1440" y2="0" stroke="#d4d0c2" stroke-width="1"/>
+    <text x="0" y="22" font-size="10" letter-spacing="2" fill="#a8852c" font-weight="700">READING THE ARCHITECTURE</text>
+    <text x="0" y="42" font-size="11" fill="#5a6975">The control plane sits between application platforms and revenue intelligence workloads. CPQ is one workload that snaps in via MCP — the same as CLM, billing, ERP,</text>
+    <text x="0" y="56" font-size="11" fill="#5a6975">pipeline analytics, and the data layer. The architectural decision is not "which CPQ vendor"; it is "which control plane orchestrates the integrated revenue stack."</text>
+
+    <text x="980" y="42" font-size="10" fill="#5a6975" font-style="italic">Workflow Economics series</text>
+    <text x="980" y="56" font-size="10" fill="#5a6975" font-style="italic">Gary Rikard, MBA · Workflow Economics series · linkedin.com/in/garyrikard</text>
+  </g>
+</svg>
+
+      </div>
+      <footer>
+        <div><strong>Gary Rikard, MBA</strong> · Workflow Economics series · Enterprise AI control plane</div>
+        <div><a href="https://www.linkedin.com/in/garyrikard" target="_blank" rel="noopener noreferrer">LinkedIn: garyrikard</a></div>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>
